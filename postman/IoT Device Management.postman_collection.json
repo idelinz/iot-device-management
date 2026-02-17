@@ -1,0 +1,266 @@
+{
+	"info": {
+		"_postman_id": "a5b94732-d645-4752-acf2-831e5e59b929",
+		"name": "IoT Device Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "1730405"
+	},
+	"item": [
+		{
+			"name": "Devices",
+			"item": [
+				{
+					"name": "List All Devices",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "{{userId}}"
+							}
+						],
+						"url": "{{baseUrl}}/api/devices"
+					},
+					"response": []
+				},
+				{
+					"name": "List All Devices (Other User)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "{{otherUserId}}"
+							}
+						],
+						"url": "{{baseUrl}}/api/devices"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Device Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "{{userId}}"
+							}
+						],
+						"url": "{{baseUrl}}/api/devices/{{deviceId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Device Details (Wrong User)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "{{otherUserId}}"
+							}
+						],
+						"url": "{{baseUrl}}/api/devices/{{deviceId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Device (Thermostat)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Bedroom Thermostat\",\n  \"serialNumber\": \"THR-200-xyz\",\n  \"tags\": [\"bedroom\", \"climate\"],\n  \"summary\": {\n    \"firmwareVersion\": \"2.1.0\",\n    \"batteryLevel\": 100\n  }\n}"
+						},
+						"url": "{{baseUrl}}/api/devices"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Device (Smoke Alarm)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Hallway Smoke\",\n  \"serialNumber\": \"SA-300-abc\",\n  \"tags\": [\"hallway\", \"safety\"],\n  \"summary\": {\n    \"firmwareVersion\": \"1.0.0\",\n    \"batteryLevel\": 92\n  }\n}"
+						},
+						"url": "{{baseUrl}}/api/devices"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Device (Invalid Serial)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Bad Device\",\n  \"serialNumber\": \"UNKNOWN-123\",\n  \"tags\": [],\n  \"summary\": {\n    \"firmwareVersion\": \"1.0.0\"\n  }\n}"
+						},
+						"url": "{{baseUrl}}/api/devices"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Device",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "{{userId}}"
+							}
+						],
+						"url": "{{baseUrl}}/api/devices/{{deviceId}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Actions",
+			"item": [
+				{
+					"name": "Turn Device On",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"deviceId\": \"{{deviceId}}\",\n  \"actionType\": \"on\",\n  \"source\": \"web_app\"\n}"
+						},
+						"url": "{{baseUrl}}/api/actions"
+					},
+					"response": []
+				},
+				{
+					"name": "Adjust Temperature",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"deviceId\": \"{{deviceId}}\",\n  \"actionType\": \"adjust\",\n  \"source\": \"web_app\",\n  \"metadata\": {\n    \"previousValue\": 20,\n    \"newValue\": 22,\n    \"property\": \"temperature\",\n    \"unit\": \"°C\"\n  }\n}"
+						},
+						"url": "{{baseUrl}}/api/actions"
+					},
+					"response": []
+				},
+				{
+					"name": "Adjust Without Metadata (Error)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"deviceId\": \"{{deviceId}}\",\n  \"actionType\": \"adjust\",\n  \"source\": \"web_app\"\n}"
+						},
+						"url": "{{baseUrl}}/api/actions"
+					},
+					"response": []
+				},
+				{
+					"name": "Action on Other User's Device (Error)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "{{userId}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"deviceId\": \"{{otherDeviceId}}\",\n  \"actionType\": \"on\"\n}"
+						},
+						"url": "{{baseUrl}}/api/actions"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000"
+		},
+		{
+			"key": "userId",
+			"value": "507f1f77bcf86cd799439011"
+		},
+		{
+			"key": "otherUserId",
+			"value": "6993b72d2827aefb84adcebb"
+		},
+		{
+			"key": "deviceId",
+			"value": "507f1f77bcf86cd799439022"
+		},
+		{
+			"key": "otherDeviceId",
+			"value": "6993b7b93a7cd4b8f542803f"
+		}
+	]
+}
