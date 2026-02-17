@@ -2,6 +2,8 @@
 
 ## Setup
 
+Requires MongoDB running locally. Set `MONGODB_URI` in `.env` (defaults to `mongodb://localhost:27017/iot-devices`).
+
 ```bash
 npm install
 cp .env.example .env
@@ -33,13 +35,13 @@ The `adjust` action requires a `metadata` object with `newValue`, `property`, an
 
 To imitate real device registration, `serialNumber` prefix is mapped to a device `model`.
 If request will have different value endpoint will throw error
+
 ```bash
   'THR-100': { type: EDeviceType.thermostat, model: 'SmartTemp Pro 100' },
   'THR-200': { type: EDeviceType.thermostat, model: 'SmartTemp Elite 200' },
   'SA-100': { type: EDeviceType.smoke_alarm, model: 'SafeGuard Smoke 100' },
   'SA-300': { type: EDeviceType.smoke_alarm, model: 'SafeGuard Pro 300' },
 ```
-
 
 ## Seeding
 
